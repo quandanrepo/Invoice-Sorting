@@ -2,6 +2,10 @@
 
 .csv
 
+#Prevent users to commit zip files
+
+.zip
+
 # Prevent users to commit their own RProject
 
 .Rproj.user
