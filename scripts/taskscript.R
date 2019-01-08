@@ -389,3 +389,15 @@ results <- cbind(results,"Gibbs+MH"=c(tau_den))
 ### The results show that there are statistically no changepoint points in this monthly summary of invoice number
 ### i.e. there is no regime change for the number of invoices recieved  
 ## (the four plots are just analytically derived, monte carlo estimate, gibbs sampler(most flexible as can be adapted to non-parameteric dirichlet models for clusters))
+
+##Not sure if this was any use:
+##Look at the difference in transaction date and process date
+##using select(data_reduce,contains("date")), we find the processing date column
+process_date <- data_reduce %>% 
+  dplyr:: select(Transaction.Date,ProcessingDate) %>% 
+  dplyr:: mutate(t_date=as.Date(Transaction.Date),p_date=as.Date(ProcessingDate))
+plot(process_date$p_date-process_date$t_date,type = 'l')
+
+difference_dates <- process_date$p_date-process_date$t_date
+minimum_process_to_transaction_time <- which(difference_dates<quantile(difference_dates,1/20))
+hist(minimum_process_to_transaction_time)
